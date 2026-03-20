@@ -39,7 +39,7 @@
 |       ├── core/
 |           └── ...
 |       ├── use_cases/
-│           ├── __init__.py
+│           ├── commands.py
 |           ├── stats.py
 |           ├── word_cloud.py
 │           └── top_words.py
@@ -52,19 +52,19 @@
 |               ├── stats.j2
 │               └── topwords.j2
 │           ├── app.py
-|           └── __init__.py
-|       └── __init__.py
+|           └── commands.py
+|       └── commands.py
 └── pyproject.toml
 ```
 
 ## Настройка окружения и запуск
 
-### Установка uv
+### Билд / установка пакета
 
 Linux / macOS
 
 ```sh
-curl -LsSf https://astral.sh/uv/install.sh | sh
+pip install -e .
 ```
 
 Windows Powershell
@@ -96,13 +96,13 @@ source .venv\bin\activate
 ### Запуск приложения
 
 ```sh
-uv run python-kt-2
+uv run python_kt_2
 ```
 
 либо
 
 ```sh
-python-kt-2
+python_kt_2
 ```
 
 ### Работа в системе контроля версий
