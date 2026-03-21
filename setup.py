@@ -7,7 +7,7 @@ setup(
     license='MIT',
     description='контрольная точка №2',
     long_description=open('README.md').read(),
-    install_requires=['flask', 'typer'],
+    install_requires=['flask', 'typer', 'nltk', 'spacy', 'wordcloud', 'rich'],
     url='https://github.com/ITHUB-SPB/ithub-python-project-2/',
     author='saint hubs community',
     author_email='daslef93@gmail.com',
