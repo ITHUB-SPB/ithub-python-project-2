@@ -112,6 +112,12 @@ source venv\bin\activate
 pip install -e .
 ```
 
+...либо, при наличии ошибок
+
+```sh
+py -m pip install -e .
+```
+
 ### Запуск приложения
 
 ```sh
