@@ -1,2 +1,6 @@
 flask
 typer
+nltk
+spacy
+wordcloud
+rich

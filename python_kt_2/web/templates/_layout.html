@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dracula">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='daisyui5.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='daisyuithemes.css') }}" type="text/css">
+    <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <h1>Анализ текста из файла</h1>
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+</body>
+</html>
