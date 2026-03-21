@@ -92,50 +92,30 @@
 
 ## Настройка окружения и запуск
 
-### Билд / установка пакета
-
-Linux / macOS
-
-```sh
-pip install -e .
-```
-
-Windows Powershell
-
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-### Установка зависимостей
-
-```sh
-uv sync
-```
-
 ### Активация виртуального окружения
 
 **Windows**
 
 ```sh
-.venv\Scripts\activate
+venv\Scripts\activate
 ```
 
 **Mac / Unix**
 
 ```sh
-source .venv\bin\activate
+source venv\bin\activate
+```
+
+### Билд / установка пакета
+
+```sh
+pip install -e .
 ```
 
 ### Запуск приложения
 
 ```sh
-uv run python_kt_2
-```
-
-либо
-
-```sh
-python_kt_2
+web
 ```
 
 ### Работа в системе контроля версий
