@@ -1,0 +1,1 @@
+magick thumb.jpg \( video.png -resize 200% \) -gravity southeast -geometry +5+5 -composite out.jpg

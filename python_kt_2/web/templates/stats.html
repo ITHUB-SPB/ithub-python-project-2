@@ -1,0 +1,9 @@
+{% extends '_layout.html' %} {% block title %} Статистика {% endblock %} {%
+block content %}
+<div>
+  <form id="stats" action="/stats" method="post" enctype="multipart/form-data">
+    <h1>Статистика</h1>
+    <input type="file" name="file" /><button type="submit">Загрузить</button>
+  </form>
+</div>
+{% endblock %}
