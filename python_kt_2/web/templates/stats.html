@@ -1,0 +1,16 @@
+{% extends '_layout.html' %}
+
+{% block title %} STATS{% endblock %}
+
+{% block header %}STATS{% endblock %}
+
+{% block content %}
+<form action="/stats" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" required accept="text/plain">
+  <label>
+    <input type="checkbox" name="pos">
+    Анализ частей речи
+  </label>
+  <button type="submit" class="btn btn-primary">Обработать</button>
+</form>
+{% endblock %}
