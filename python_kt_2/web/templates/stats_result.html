@@ -4,27 +4,59 @@
 
 {% block content %}
 <h2>Токены</h2>
-<table>
-    <tr>
-        <th>Токен</th>
-        <th>Частота</th>
+<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+  <table class="table">
+    <thead>
+      <tr class="hover:bg-base-300">
+        <th>Токены</th>
+        <th>Количество</th>
+        <th></th>
     </tr>
+    </thead>
+    <tbody>
     {% for token in result.tokens %}
-    <tr>
+    <tr class="hover:bg-base-300">
         <td>{{ token }}</td>
         <td>{{ result.tokens[token] }}</td>
+        <td></td>
     </tr>
     {% endfor %}
-    <tr>
+    </tbody>
+    <thead>
+      <tr class="hover:bg-base-300">
         <th>Символы</th>
-        <th>Частота</th>
+        <th>Количество</th>
+        <th>%</th>
     </tr>
+    </thead>
+    <tbody>
     {% for symbol in result.symbols %}
-    <tr>
+    <tr class="hover:bg-base-300">
         <td>{{ symbol }}</td>
-        <td>{{ result.symbols[symbol] }}</td>
+        <td>{{ result.symbols[symbol].quantity }}</td>
+        <td>{{ result.symbols[symbol].percent }}</td>
     </tr>
     {% endfor %}
-</table>
+    </tbody>
+    {% if result.pos %}
+      <thead>
+      <tr class="hover:bg-base-300">
+        <th>Символы</th>
+        <th>Количество</th>
+        <th></th>
+    </tr>
+    </thead>
+      <tbody>
+        {% for key in result.pos %}
+          <tr class="hover:bg-base-300">
+            <td>{{ key }}</td>
+            <td>{{ result.pos[key] }}</td>
+            <td></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    {% endif %}
+  </table>
+</div>
 
 {% endblock %}

@@ -1,45 +1,42 @@
-from typing import Literal
-from ..core.preprocess import filter_stopwords, clean_words
-from python_kt_2.core.tokenize import tokenize_text
+from typing import Iterable
+import pymorphy3
+from nltk import SnowballStemmer
+
+morph = pymorphy3.MorphAnalyzer()
 
 
-def _count_words(words: list[str]) -> dict[str, int]:
-    """Подсчет количества вхождений слов.
+def lemmatization_text(words: Iterable[str]) -> Iterable[str]:
     """
-
-    counter = {}
-
-    # TODO реализуйте подсчет слов
-
-    return counter
+    Лемматизация текста."""
+    return [morph.parse(word)[0].normal_form for word in words]
 
 
-def _sort_by_count(item: tuple[str, int]) -> int:
-    """Сортирует по количеству вхождений,
-    от большего к меньшему
+stemmer = SnowballStemmer("russian")
+
+
+def stemming_text(words: Iterable[str]) -> Iterable[str]:
     """
-
-    # TODO исправьте ошибку
-    return -item[0]
-
-
-def top_words(
-    text: str, 
-    normalize_mode: Literal["stemming", "lemmatization"] = "stemming", 
-    pos: list[str] = ["__all__"]
-) -> list[tuple[str, int]]:
-    """Подсчет топ-N-важных слов.
-
-    Получает текст, разбивает на слова, убирает пунктуацию и пробельные символы,
-    фильтрует стоп-слова, нормализует (либо стемминг, либо лемматизация),
-    подсчитывает и возвращает список кортежей для топ-N-важных слов.
+    Стемминг текста.
     """
-    
-    # TODO допишите / исправьте ошибки
+    return [stemmer.stem(word) for word in words]
 
-    initial_words = tokenize_text(text)["words"]
-    words_after_clean = clean_words(initial_words)
-    words_after_filter = filter_stopwords(words_after_clean) 
-    
-    return sorted(_count_words(words_after_filter).items(), key=_sort_by_count)
-    
+
+def count_words(words: Iterable[str], pos: list[str] = ["__all__"]) -> dict[str, int]:
+    """
+    Подсчет количества вхождений слов.
+    """
+    count_words = dict[str, int]()
+
+    for word in words:
+        word_pos = morph.parse(word)[0].tag.POS
+        if "__all__" not in pos and word_pos not in pos:
+            continue
+        if word in count_words:
+            count_words[word] += 1
+        else:
+            count_words[word] = 1
+
+    sorted_count_words = dict(
+        sorted(count_words.items(), key=lambda item: item[1], reverse=True)[:30]
+    )
+    return sorted_count_words

@@ -3,20 +3,16 @@
 {% block title %} Stats {% endblock %}
 
 {% block content %}
-    <form action="/stats" method="post" enctype="multipart/form-data">
+  <form action="/stats" method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:40px;">
     {% if error %}
-    <p> {{ error }}</p>
+      <p> {{ error }}</p>
     {% endif %}
-
-<fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
   <legend class="fieldset-legend">Анализ по частям речи</legend>
-  <label class="label">
-    <input type="checkbox" checked="checked" class="checkbox" />
-    Вкл./выкл.
-  </label>
-</fieldset>
-<input type="file" class="file-input file-input-primary" name="text" accept="text/plain" required>
-<button class="btn btn-primary" type="submit">Анализ</button>
-</p>
+    <label class="label">
+      <input type="checkbox" checked="checked" class="checkbox" name="pos"/>
+      Вкл./выкл.
+    </label>
+  <input type="file" class="file-input file-input-primary" name="text" accept="text/plain" required>
+  <button class="btn btn-primary" type="submit">Анализ</button>
 </form>
 {% endblock %}

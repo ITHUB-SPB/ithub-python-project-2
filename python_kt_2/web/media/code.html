@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Private Chats List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#6a25f4",
+                        "background-light": "#f6f5f8",
+                        "background-dark": "#161022",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .ios-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<!-- Sticky Top Bar (iOS Style) -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 ios-blur border-b border-slate-200 dark:border-white/10">
+<div class="flex items-center p-4 pb-2 justify-between max-w-md mx-auto">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">search</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">Private Chats</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-full h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-2xl">chat_add_on</span>
+</button>
+</div>
+</div>
+<!-- Segmented Control / Tabs -->
+<div class="max-w-md mx-auto px-4 mt-2">
+<div class="flex border-b border-slate-200 dark:border-white/10 gap-8">
+<a class="flex flex-col items-center justify-center border-b-[2px] border-primary text-primary pb-3 pt-2" href="#">
+<p class="text-sm font-bold tracking-tight">All Messages</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[2px] border-transparent text-slate-500 dark:text-slate-400 pb-3 pt-2" href="#">
+<div class="flex items-center gap-2">
+<p class="text-sm font-bold tracking-tight">Unread</p>
+<span class="bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full">3</span>
+</div>
+</a>
+</div>
+</div>
+</header>
+<!-- Chat List Container -->
+<main class="max-w-md mx-auto pb-24">
+<!-- List Item: Unread -->
+<div class="flex items-center gap-4 bg-transparent px-4 py-4 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border-b border-slate-100 dark:border-white/5">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-14 w-14 ring-2 ring-primary/20" data-alt="Abstract colorful geometric pattern for Indigo Fox" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpqLiAhw53pYWsVn4cfjbGuSNkX0IdjgSWyowZBbUNcgZNpT9PbEmdpHK27IDB5a-ezqeEofn9n2z76rYC5GrePNjN4XWKzjOLgbtF4dShb-ookKT9ChQgVKkigrLHoK5WLbnKRCiQGFYlha_TlgzkRIKWM4UtT2YDDuVQEE-kCpwz8lqafCjxolzEauPbpGs_bLZgv3L3WxvSaio-A-Sv0Y6NRvyZMkPdgdVbiB-23RKsAxarqljsPEQFITsKIwKIUfP1K95Ztxfu");'>
+</div>
+<div class="absolute -top-1 -right-1 size-4 bg-green-500 border-2 border-background-light dark:border-background-dark rounded-full"></div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-slate-900 dark:text-white text-base font-bold truncate">Indigo Fox</p>
+<p class="text-primary text-xs font-semibold">Just now</p>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium line-clamp-1">Can you send that image again? I missed the download link...</p>
+</div>
+<div class="shrink-0 ml-2">
+<div class="size-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(106,37,244,0.6)]"></div>
+</div>
+</div>
+<!-- List Item: With Media Indicator -->
+<div class="flex items-center gap-4 bg-transparent px-4 py-4 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border-b border-slate-100 dark:border-white/5">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-14 w-14" data-alt="Abstract blue and purple gradient circle for Digital Nomad" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB_fU1_GELMBWIRyPflTw2QjthKz4wZYXyLrJCkk9Qs9UfJ_PW_pgoRPtQlgUGBHpnpyi40kMhymFdPwpE7dzMp861RYFnMsH_GKJOmu8RuCSiG-rTIj0O_XSbN0PTo7ZXjeGdLLuv8v5CnlueqoeSeitk0CxOwR2qsX8pvoitUi7YPdtgaikGHkDui7KKt_qpSDru22Q2I5QiCa8OxP1ho7jC6pu3KZeOu5Olq_QeRvRWJc0QWCJsH8AaeghSM7QkDZGWQJ9MJKBut");'>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-slate-900 dark:text-white text-base font-bold truncate">Digital Nomad</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">2m ago</p>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-sm">image</span>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-normal line-clamp-1 italic">Shared a temporary photo</p>
+</div>
+</div>
+<div class="shrink-0 ml-2">
+<div class="size-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(106,37,244,0.6)]"></div>
+</div>
+</div>
+<!-- List Item: Read -->
+<div class="flex items-center gap-4 bg-transparent px-4 py-4 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border-b border-slate-100 dark:border-white/5 opacity-80">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-14 w-14" data-alt="Abstract dark aesthetic pattern for Neon Specter" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDOnr-YtEdhSlWZsDjJ4ZftQ_NOz3YKqfU2PHSOYY2qpZDvIvCMm9yzT-8i774Wm6pjHQpRXlwbSYsO1i0-QokuVcFuTqfkbXXYDXqk2mQhBNtwCzbkKsnx8e5O6jqxRXqnB904YwF8BM-0Q9JKTAQwNOTXdSqG7QZeVoUOkMzqbVWxIzfQ8jkr1y6YMEFG9lv9793Nj7Bt5C1E3n1Wn6vkG-16tDOhc5-dK91GnHuDsxUfCC4VLBBh5cx_DiHBUAse9AMVsu4orAR");'>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-slate-900 dark:text-white text-base font-semibold truncate">Neon Specter</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">1h ago</p>
+</div>
+<p class="text-slate-500 dark:text-slate-500 text-sm font-normal line-clamp-1">That sounds like a plan. See you in the public room soon.</p>
+</div>
+<div class="shrink-0 ml-2">
+<span class="material-symbols-outlined text-slate-400 dark:text-slate-600 text-lg">done_all</span>
+</div>
+</div>
+<!-- List Item: Long Message -->
+<div class="flex items-center gap-4 bg-transparent px-4 py-4 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border-b border-slate-100 dark:border-white/5">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-14 w-14" data-alt="Abstract organic flowing shapes for Cyber Monk" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB8h31wRuzi8NCVAh85RkHOi5VQgAU6Ul3DpGn6l-g2sJfdxWxQ2I6OBG_HBPrvJxDY8ZNrGsJh_MyRWn8taeP_uRREmTDiIRZLusNGWoBaV0AEFD2ugHlFlcFoBMiMZ0ik1lPEIFyHSIkyPu0E9U6K080Ubdx3aAHEuBqyzkVPsA0iz9adqsEo5__pJ0560fy9Ffakr37toJ8A-A_IHxcKazIe1xS3LaEjcMa-YKst9-xqlvdCNHdbhQd6l3GGMojJqb_ZfMvNxQs0");'>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-slate-900 dark:text-white text-base font-bold truncate">Cyber Monk</p>
+<p class="text-primary text-xs font-semibold">4h ago</p>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm font-medium line-clamp-1">The encryption keys have been updated. Please verify the fingerprint before we proceed with the exchange.</p>
+</div>
+<div class="shrink-0 ml-2">
+<div class="size-2.5 rounded-full bg-primary"></div>
+</div>
+</div>
+<!-- List Item: Older -->
+<div class="flex items-center gap-4 bg-transparent px-4 py-4 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors cursor-pointer border-b border-slate-100 dark:border-white/5 opacity-60">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl h-14 w-14" data-alt="Abstract orange and yellow swirl for Solar Flare" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFtactaCKFD3_QoX4Xzv--XDtbD0gRiVoa8wDx4bTmapQ1UQWw7xJSI4bBev0gCk_tmUk3P5Wv0_QjyIiQWh8WQi3k8jj0IZ4NDzqQs71YjcdSZLXzpNNe0DfM_WUQ3QDFog0W86cGNf8PXVX-gJKaanyI334diMVkXJGsyGRqFeC2YsXLz9R3xd9-g-0q-8anBksxl8N2yqXp67LOTLOojC5tdeVmqleUJFx0yY2s3DcAcMVxQ01JE85Tdzt_5vUmYfjyRnmzMWAK");'>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-slate-900 dark:text-white text-base font-semibold truncate">Solar Flare</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Yesterday</p>
+</div>
+<p class="text-slate-500 dark:text-slate-500 text-sm font-normal line-clamp-1">Catch you later!</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/90 dark:bg-background-dark/90 ios-blur border-t border-slate-200 dark:border-white/10 px-6 py-3 pb-8 flex justify-around items-center z-50">
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-2xl">public</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Public</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl fill-current">forum</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Private</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Profile</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
+</button>
+</nav>
+<!-- Floating Action Button (Optional extra for iOS accessibility) -->
+<div class="fixed bottom-28 right-6">
+<button class="bg-primary text-white size-14 rounded-full shadow-lg shadow-primary/40 flex items-center justify-center hover:scale-105 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,19 @@
+{% extends "_layout.html" %}
+
+{% block title %} Stats {% endblock %}
+
+{% block content %}
+<form action="/top" method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:40px;">
+  {% if error %}
+  <p> {{ error }}</p>
+  {% endif %}
+  <legend class="fieldset-legend">Топ слова</legend>
+  <select class="select select-primary" name="normalization">
+    <option disabled selected>Выберите тип нормализации</option>
+    <option>Лемматизация</option>
+    <option>Стемминг</option>
+  </select>
+  <input type="file" class="file-input file-input-primary" name="text" accept="text/plain" required>
+  <button class="btn btn-primary" type="submit">Анализ</button>
+</form>
+{% endblock %}

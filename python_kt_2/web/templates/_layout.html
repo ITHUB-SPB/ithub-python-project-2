@@ -7,13 +7,38 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='daisyuithemes.css') }}" type="text/css">
     <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
     <title>{% block title %}{% endblock %}</title>
+    <style>
+h1 {
+  font-size: 64px;
+  font-weight: 900;
+  align-self: center;
+  color: rgb(249, 226, 175);
+}
+      body, body > * {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        justify-content: center;
+      }
+    </style>
 </head>
 <body>
-    <h1>Анализ текста из файла</h1>
-    <div>
-        {% block content %}
-        {% endblock %}
-    </div>
-    
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div role="alert" class="alert alert-error">
+           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>
+           <span>{{ message }}</span>
+         </div>
+       {% endfor %}
+     {% endif %}
+   <h1>Анализ текста из файла</h1>
+   <div>       
+    {% block content %}
+    {% endblock %}
+  </div>
+  {% endwith %}
 </body>
 </html>

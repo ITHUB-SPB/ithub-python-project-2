@@ -1,7 +1,11 @@
 import re
-import pathlib
+import spacy
 
-from ..core.types import TextStats, SymbolStats, Tokens, TokensStats
+
+nlp = spacy.load("ru_core_news_sm")
+from collections import Counter
+
+from ..core.types import TextStats, SymbolStats, TokensStats
 
 
 def stats(text: str, pos: bool = False) -> TextStats:
@@ -44,7 +48,13 @@ def stats(text: str, pos: bool = False) -> TextStats:
         }
 
     """
-
+    print(pos)
+    if pos:
+        return {
+            "tokens": _get_tokens_stats(text),
+            "symbols": _get_symbols_stats(text),
+            "pos": _get_pos_stats(text),
+        }
     return {"tokens": _get_tokens_stats(text), "symbols": _get_symbols_stats(text)}
 
 
@@ -59,27 +69,47 @@ def _get_symbols_stats(text: str) -> SymbolStats:
     for symbol in text:
         if symbol.isalpha():
             count_alphas += 1
+        elif symbol.isdigit():
+            count_digits += 1
+        elif symbol.isspace():
+            count_spaces += 1
+        else:
+            count_punctuation += 1
 
     return {
-        "alphas": {"quantity": count_alphas, "percent": round(count_alphas / len(text), 2) },
-        "digits": {"quantity": count_digits, "percent": 5.00},
-        "spaces": {"quantity": count_spaces, "percent": 25.50},
-        "punctuation": {"quantity": count_punctuation, "percent": 40.50},
+        "alphas": {
+            "quantity": count_alphas,
+            "percent": round(count_alphas / len(text) * 100, 2),
+        },
+        "digits": {
+            "quantity": count_digits,
+            "percent": round(count_digits / len(text) * 100, 2),
+        },
+        "spaces": {
+            "quantity": count_spaces,
+            "percent": round(count_spaces / len(text) * 100, 2),
+        },
+        "punctuation": {
+            "quantity": count_punctuation,
+            "percent": round(count_punctuation / len(text) * 100, 2),
+        },
     }
 
 
 def _get_tokens_stats(text: str) -> TokensStats:
     """Подсчет количества токенов."""
     text = text.strip()
-
     return {
-        "paragraphs": 0,
-        "sentences": 0,
-        "words": 0
+        "paragraphs": len(text.splitlines()),
+        "sentences": len(re.split(r"[.!?]\s+", text)),
+        "words": len(re.split(r"\s+", text)),
     }
 
 
-def _get_pos_stats(text: str):
+def _get_pos_stats(text: str) -> dict:
     """Подсчет pos-аналитики"""
-
-    return
+    doc = nlp(text)
+    counter = Counter()
+    for token in doc:
+        counter[token.pos_] += 1
+    return dict(counter)

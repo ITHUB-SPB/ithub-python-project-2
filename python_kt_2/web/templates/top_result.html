@@ -1,0 +1,26 @@
+{% extends "_layout.html" %}
+
+{% block title %} Stats {% endblock %}
+
+{% block content %}
+<h2>Токены</h2>
+<div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+  <table class="table">
+    <thead>
+      <tr class="hover:bg-base-300">
+        <th>Слово</th>
+        <th>Упоминания 8===D</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for word in result %}
+      <tr class="hover:bg-base-300">
+        <td>{{ word }}</td>
+        <td>{{ result[word] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
