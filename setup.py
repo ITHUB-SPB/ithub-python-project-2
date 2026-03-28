@@ -13,7 +13,6 @@ setup(
     author_email='daslef93@gmail.com',
     entry_points={
         'console_scripts': [
-            'cli = python_kt_2.cli:app',
             'web = python_kt_2.web:main'
         ],
     },

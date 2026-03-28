@@ -53,7 +53,7 @@ def word_cloud(
         typer.Argument(help="Исходный текстовый файл", exists=True, readable=True),
     ],
     output: pathlib.Path | None = pathlib.Path("/") / f"{strftime('%H_%M_$S', localtime())}_output.png",
-    preprocess_mode: Literal["basic", "stemming", "lemmatization"] = "stemming",
+    preprocess_mode: Literal["basic", "full"] = "basic",
 ):
     """Построение облака важных слов.
 
@@ -61,7 +61,7 @@ def word_cloud(
 
     Возможности:
     - сохранение результата (изображения) в файл
-    - три уровня предобработки (базовый, стемминг, лемматизация).
+    - два уровня предобработки (базовый, полный).
     """
 
     text = input.read_text(encoding="utf-8")
@@ -79,7 +79,6 @@ def top_words(
     ],
     output: pathlib.Path | None = None,
     normalize_mode: Literal["stemming", "lemmatization"] = "stemming",
-    pos: list[str] = ["__all__"],
 ):
     """Подсчет топ-N-важных слов.
 
@@ -87,7 +86,6 @@ def top_words(
 
     Возможности:
     - указание N слов,
-    - фильтр по POS-тегам,
     - базовая предобработка (фильтр по стоп-словам, токенизация),
     - два типа нормализации (стемминг, лемматизация),
     - запись результатов в файл.
