@@ -1,0 +1,30 @@
+{% extends "_layout.html" %}
+
+{% block title %} Stats {% endblock %}
+
+{% block content %}
+<h2>Токены</h2>
+<table>
+    <tr>
+        <th>Токен</th>
+        <th>Частота</th>
+    </tr>
+    {% for token in result.tokens %}
+    <tr>
+        <td>{{ token }}</td>
+        <td>{{ result.tokens[token] }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <th>Символы</th>
+        <th>Частота</th>
+    </tr>
+    {% for symbol in result.symbols %}
+    <tr>
+        <td>{{ symbol }}</td>
+        <td>{{ result.symbols[symbol] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
