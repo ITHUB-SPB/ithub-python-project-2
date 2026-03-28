@@ -92,7 +92,7 @@ def word_cloud(
         typer.Argument(help="Исходный текстовый файл", exists=True, readable=True),
     ],
     output: pathlib.Path | None = pathlib.Path("/") / f"{strftime('%H_%M_$S', localtime())}_output.png",
-    preprocess_mode: Literal["basic", "stemming", "lemmatization"] = "stemming",
+    preprocess_mode: Literal["basic", "full"] = "basic",
 ):
     """Построение облака важных слов.
 
@@ -100,7 +100,7 @@ def word_cloud(
 
     Возможности:
     - сохранение результата (изображения) в файл
-    - три уровня предобработки (базовый, стемминг, лемматизация).
+    - два уровня предобработки.
     """
 
     text = input.read_text(encoding="utf-8")
