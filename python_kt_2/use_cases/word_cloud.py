@@ -39,7 +39,7 @@ def word_cloud(
         width=800,
         height=400,
         background_color='white',
-        max_words=100,
+        max_words=10000,
         colormap='viridis'
     )
     wc.generate_from_frequencies(word_freq)
