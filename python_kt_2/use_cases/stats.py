@@ -1,85 +1,105 @@
-import re
-import pathlib
+# import re
+# import pathlib
 
-from ..core.types import TextStats, SymbolStats, Tokens, TokensStats
+# from ..core.types import TextStats, SymbolStats, Tokens, TokensStats
 
 
-def stats(text: str, pos: bool = False) -> TextStats:
-    """Функция для подсчета статистик.
+# def stats(text: str, pos: bool = False) -> TextStats:
+#     """Функция для подсчета статистик.
 
-    Args:
-        text: текст для расчета статистик
-        pos: опция, добавляет аналитику по частям речи
+#     Args:
+#         text: текст для расчета статистик
+#         pos: опция, добавляет аналитику по частям речи
 
-    Returns:
-        Статистика, сгруппированная по токенам, символам и,
-        опционально, морфологическим характеристикам
+#     Returns:
+#         Статистика, сгруппированная по токенам, символам и,
+#         опционально, морфологическим характеристикам
 
-        Например, для строки `\tПроверка!\nНовая строка` это
-        будет:
-        {
-            "tokens": {
-                "paragraphs": 2,
-                "sentences": 2,
-                "words": 3,
-            },
-            "symbols": {
-                "alphas": {
-                    "quantity": 19,
-                    "percent": 82.61
-                },
-                "digits": {
-                    "quantity": 0,
-                    "percent": 0.00
-                },
-                "spaces": {
-                    "quantity": 3,
-                    "percent": 13.04
-                },
-                "punctuation": {
-                    "quantity": 1,
-                    "percent": 4.35
-                }
-            }
+#         Например, для строки `\tПроверка!\nНовая строка` это
+#         будет:
+#         {
+#             "tokens": {
+#                 "paragraphs": 2,
+#                 "sentences": 2,
+#                 "words": 3,
+#             },
+#             "symbols": {
+#                 "alphas": {
+#                     "quantity": 19,
+#                     "percent": 82.61
+#                 },
+#                 "digits": {
+#                     "quantity": 0,
+#                     "percent": 0.00
+#                 },
+#                 "spaces": {
+#                     "quantity": 3,
+#                     "percent": 13.04
+#                 },
+#                 "punctuation": {
+#                     "quantity": 1,
+#                     "percent": 4.35
+#                 }
+#             }
+#         }
+
+#     """
+
+#     return {"tokens": _get_tokens_stats(text), "symbols": _get_symbols_stats(text)}
+
+
+def get_symbols_stats(text: str) -> dict:
+    if not text:
+        return {
+            "alphas": {"quantity": 0, "percent": 0},
+            "digits": {"quantity": 0, "percent": 0},
+            "spaces": {"quantity": 0, "percent": 0},
+            "punctuation": {"quantity": 0, "percent": 0},
         }
-
-    """
-
-    return {"tokens": _get_tokens_stats(text), "symbols": _get_symbols_stats(text)}
-
-
-def _get_symbols_stats(text: str) -> SymbolStats:
-    """Посимвольная статистика (количество и процент)."""
-
+    
+    text_length = len(text)
+    punctuation_marks = set('.,!?;:-—()[]{}""\'\'<>…')
+    
     count_alphas = 0
     count_digits = 0
     count_spaces = 0
     count_punctuation = 0
-
-    for symbol in text:
-        if symbol.isalpha():
+    
+    for curr in text:
+        if curr.isdigit():
+            count_digits += 1
+        elif curr.isspace():
+            count_spaces += 1
+        elif curr.isalpha():
             count_alphas += 1
-
+        elif curr in punctuation_marks:
+            count_punctuation += 1
+    
+    per_alp = round(count_alphas / text_length * 100, 1)
+    per_digit = round(count_digits / text_length * 100, 1)
+    per_space = round(count_spaces / text_length * 100, 1)
+    per_punctuation = round(count_punctuation / text_length * 100, 1)
+    
     return {
-        "alphas": {"quantity": count_alphas, "percent": round(count_alphas / len(text), 2) },
-        "digits": {"quantity": count_digits, "percent": 5.00},
-        "spaces": {"quantity": count_spaces, "percent": 25.50},
-        "punctuation": {"quantity": count_punctuation, "percent": 40.50},
+        "alphas": {"quantity": count_alphas, "percent": per_alp},
+        "digits": {"quantity": count_digits, "percent": per_digit},
+        "spaces": {"quantity": count_spaces, "percent": per_space},
+        "punctuation": {"quantity": count_punctuation, "percent": per_punctuation},
     }
 
 
-def _get_tokens_stats(text: str) -> TokensStats:
-    """Подсчет количества токенов."""
-    text = text.strip()
+# def _get_tokens_stats(text: str) -> TokensStats:
+#     """Подсчет количества токенов."""
+#     text = text.strip()
 
-    return {
-        "paragraphs": 0,
-        "sentences": 0,
-        "words": 0
-    }
+#     return {
+#         "paragraphs": 0,
+#         "sentences": 0,
+#         "words": 0
+#     }
 
 
-def _get_pos_stats(text: str):
-    """Подсчет pos-аналитики"""
+# def _get_pos_stats(text: str):
+#     """Подсчет pos-аналитики"""
 
-    return
+#     return

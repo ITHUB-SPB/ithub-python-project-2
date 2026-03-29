@@ -1,0 +1,57 @@
+{% extends "_layout.html" %}
+
+{% block title %}статистика{% endblock %}
+
+
+
+{% block content %}
+
+<div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+        <h2 class="card-title">статистика</h2>
+        
+        <form method="POST" action="/stats">
+            <div class="form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text">выберите файл</span>
+                </label>
+                <select name="filename" class="select select-bordered" required>
+                    <option value="">выберите файл</option>
+                    {% for file in files %}
+                        <option value="{{ file }}" {% if selected_file == file %}selected{% endif %}>{{ file }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-primary">анализировать</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if error %}
+    <div class="alert alert-error mt-4">
+        <span>{{ error }}</span>
+    </div>
+{% endif %}
+
+{% if stats %}
+    <div class="card bg-base-100 shadow-xl mt-6">
+        <div class="card-body">
+            <h2 class="card-title">Результаты для файла: {{ selected_file }}</h2>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <tbody>
+                        <tr><td>буквы</td><td>{{ stats.alphas.quantity }}</td><td>{{ stats.alphas.percent }}%</td></tr>
+                        <tr><td>цифры</td><td>{{ stats.digits.quantity }}</td><td>{{ stats.digits.percent }}%</td></tr>
+                        <tr><td>пробелы</td><td>{{ stats.spaces.quantity }}</td><td>{{ stats.spaces.percent }}%</td></tr>
+                        <tr><td>знаки</td><td>{{ stats.punctuation.quantity }}</td><td>{{ stats.punctuation.percent }}%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}

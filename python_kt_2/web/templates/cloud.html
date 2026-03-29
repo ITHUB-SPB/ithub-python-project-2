@@ -1,0 +1,59 @@
+{% extends "_layout.html" %}
+
+{% block title %}облако слов{% endblock %}
+
+{% block content %}
+
+<div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+        <h2 class="card-title">облако слов</h2>
+        
+        <form method="POST" action="/cloud">
+            <div class="form-control w-full max-w-xs">
+                <label class="label">
+                    <span class="label-text">выберите файл</span>
+                </label>
+                <select name="filename" class="select select-bordered" required>
+                    <option value="">выберите файл</option>
+                    {% for file in files %}
+                        <option value="{{ file }}" {% if selected_file == file %}selected{% endif %}>{{ file }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-control w-full max-w-xs mt-4">
+                <label class="label">
+                    <span class="label-text">нормализация</span>
+                </label>
+                <select name="preprocess_mode" class="select select-bordered">
+                    <option value="basic" {% if mode == 'basic' %}selected{% endif %}>без нормализации</option>
+                    <option value="stemming" {% if mode == 'stemming' %}selected{% endif %}>стемминг</option>
+                    <option value="lemmatization" {% if mode == 'lemmatization' %}selected{% endif %}>лемматизация</option>
+                </select>
+            </div>
+            
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-primary">создать облако</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if error %}
+    <div class="alert alert-error mt-4">
+        <span>{{ error }}</span>
+    </div>
+{% endif %}
+
+{% if wordcloud_img %}
+    <div class="card bg-base-100 shadow-xl mt-6">
+        <div class="card-body">
+            <h2 class="card-title">облако: {{ selected_file }}</h2>
+            <div class="flex justify-center mt-4">
+                <img src="data:image/png;base64,{{ wordcloud_img }}" alt="Облако слов" class="rounded-lg shadow-md">
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
