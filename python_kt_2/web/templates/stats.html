@@ -1,0 +1,86 @@
+{% extends "_layout.html" %}
+
+{% block title %}Статистика - Text Analysis{% endblock %}
+
+{% block content %}
+<h2>📈 Статистика текста</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="filename">Выберите файл:</label>
+        <select name="filename" id="filename" required>
+            <option value="">-- Выберите файл --</option>
+            {% for file in files %}
+                <option value="{{ file.name }}" {% if filename == file.name %}selected{% endif %}>
+                    {{ file.name }} ({{ (file.size / 1024)|round(1) }} KB)
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="pos">Части речи:</label>
+        <select name="pos" id="pos">
+            <option value="none" {% if pos_option == 'none' %}selected{% endif %}>Не учитывать</option>
+            <option value="nouns" {% if pos_option == 'nouns' %}selected{% endif %}>Только существительные</option>
+            <option value="verbs" {% if pos_option == 'verbs' %}selected{% endif %}>Только глаголы</option>
+            <option value="adjectives" {% if pos_option == 'adjectives' %}selected{% endif %}>Только прилагательные</option>
+        </select>
+    </div>
+    
+    <button type="submit">Анализировать</button>
+</form>
+
+{% if stats %}
+    <h3 style="margin-top: 30px;">Результаты анализа файла: {{ filename }}</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Показатель</th>
+                <th>Значение</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Количество символов (с пробелами)</td>
+                <td>{{ stats.char_count }}</td>
+            </tr>
+            <tr>
+                <td>Количество символов (без пробелов)</td>
+                <td>{{ stats.char_count_no_spaces }}</td>
+            </tr>
+            <tr>
+                <td>Количество слов</td>
+                <td>{{ stats.word_count }}</td>
+            </tr>
+            <tr>
+                <td>Количество уникальных слов</td>
+                <td>{{ stats.unique_words }}</td>
+            </tr>
+            <tr>
+                <td>Количество предложений</td>
+                <td>{{ stats.sentence_count }}</td>
+            </tr>
+            <tr>
+                <td>Средняя длина слова</td>
+                <td>{{ stats.avg_word_length|round(2) }}</td>
+            </tr>
+            <tr>
+                <td>Средняя длина предложения (в словах)</td>
+                <td>{{ stats.avg_sentence_length|round(2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    {% if pos_option != 'none' %}
+        <div class="info-message" style="margin-top: 20px;">
+            <strong>Информация:</strong> Анализ выполнен с учетом частей речи: 
+            {% if pos_option == 'nouns' %}существительные
+            {% elif pos_option == 'verbs' %}глаголы
+            {% elif pos_option == 'adjectives' %}прилагательные
+            {% endif %}
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

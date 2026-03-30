@@ -1,0 +1,59 @@
+{% extends "_layout.html" %}
+
+{% block title %}Топ-слова - Text Analysis{% endblock %}
+
+{% block content %}
+<h2>🏆 Топ-слова в тексте</h2>
+
+<form method="POST">
+    <div class="form-group">
+        <label for="filename">Выберите файл:</label>
+        <select name="filename" id="filename" required>
+            <option value="">-- Выберите файл --</option>
+            {% for file in files %}
+                <option value="{{ file.name }}" {% if filename == file.name %}selected{% endif %}>
+                    {{ file.name }} ({{ (file.size / 1024)|round(1) }} KB)
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="form-group checkbox">
+        <input type="checkbox" name="normalize" id="normalize" value="true" {% if normalize %}checked{% endif %}>
+        <label for="normalize" style="display: inline;">Нормализация слов (стемминг/лемматизация)</label>
+    </div>
+    
+    <button type="submit">Анализировать</button>
+</form>
+
+{% if top_words %}
+    <h3 style="margin-top: 30px;">Топ-20 слов в файле: {{ filename }}</h3>
+    
+    {% if normalize %}
+        <div class="info-message" style="margin-bottom: 20px;">
+            <strong>Информация:</strong> Выполнена нормализация слов (приведены к базовой форме)
+        </div>
+    {% endif %}
+    
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Слово</th>
+                <th>Частота</th>
+                <th>Частота (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for word in top_words %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td><strong>{{ word.word }}</strong></td>
+                <td>{{ word.count }}</td>
+                <td>{{ "%.2f"|format(word.percentage) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

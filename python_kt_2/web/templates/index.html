@@ -1,0 +1,25 @@
+{% extends "_layout.html" %}
+
+{% block title %}Главная - Text Analysis{% endblock %}
+
+{% block content %}
+<h2>Добро пожаловать в систему анализа текста!</h2>
+
+<div style="margin-top: 30px;">
+    <p>Выберите один из доступных функциональных модулей:</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+        <div style="padding: 20px; background: #f8f9fa; border-radius: 5px;">
+            <h3>📈 Статистика</h3>
+            <p>Получение базовой статистики по тексту: количество символов, слов, предложений и частей речи.</p>
+            <a href="{{ url_for('stats') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none;">Перейти →</a>
+        </div>
+        
+        <div style="padding: 20px; background: #f8f9fa; border-radius: 5px;">
+            <h3>🏆 Топ-слова</h3>
+            <p>Анализ частотности слов с возможностью нормализации (стемминг/лемматизация).</p>
+            <a href="{{ url_for('top_words') }}" style="display: inline-block; margin-top: 10px; color: #3498db; text-decoration: none;">Перейти →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
