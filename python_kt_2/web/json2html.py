@@ -4,26 +4,6 @@ json2htmlpy: A utility by Haranadh to convert JSON data into HTML tables.
 
 import json
 import sys
-# from bs4 import BeautifulSoup
-
-
-# def beautify_html(html_content):
-# """
-# Parse the HTML content using BeautifulSoup
-# Beautify HTML content by adding indentation and new lines.
-#
-# Args:
-#     html_content (str): The raw HTML content to be beautified.
-#
-# Returns:
-#     str: The beautified HTML content.
-# """
-# soup = BeautifulSoup(html_content, "html.parser")
-#
-# # Use the prettify method to beautify and indent the HTML content
-# beautified_html = soup.prettify()
-#
-# return beautified_html
 
 
 def json_to_html_table(data):
