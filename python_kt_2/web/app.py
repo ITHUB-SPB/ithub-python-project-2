@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, request, flash, redirect, url_for
-# Импортируем функции под другими именами, чтобы не было конфликта с именами роутов
 from ..use_cases.stats import execute as run_stats_logic
 from ..use_cases.word_cloud import execute as run_cloud_logic
 
@@ -17,7 +16,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/stats', methods=['GET', 'POST'])
-def stats(): # Теперь функция называется stats, как и просит url_for
+def stats():
     data = None
     if request.method == 'POST':
         file = request.files.get('file')
@@ -28,7 +27,7 @@ def stats(): # Теперь функция называется stats, как и
         try:
             text = file.read().decode('utf-8')
             pos_mode = 'pos' in request.form
-            data = run_stats_logic(text, pos_mode) # Используем новое имя
+            data = run_stats_logic(text, pos_mode)
         except Exception as e:
             flash(f"Ошибка при чтении файла: {e}")
             return redirect(request.url)
@@ -36,7 +35,7 @@ def stats(): # Теперь функция называется stats, как и
     return render_template('stats.html', result=data)
 
 @app.route('/cloud', methods=['GET', 'POST'])
-def cloud(): # Теперь функция называется cloud, как и просит url_for
+def cloud():
     img_data = None
     if request.method == 'POST':
         file = request.files.get('file')
@@ -53,7 +52,7 @@ def cloud(): # Теперь функция называется cloud, как и
         try:
             text = file_content.decode('utf-8')
             mode = request.form.get('mode', 'base')
-            img_data = run_cloud_logic(text, mode) # Используем новое имя
+            img_data = run_cloud_logic(text, mode)
         except Exception as e:
             flash(f"Ошибка генерации: {e}")
             return redirect(request.url)
