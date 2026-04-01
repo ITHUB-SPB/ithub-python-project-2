@@ -1,0 +1,43 @@
+{% extends "_layout.html" %}
+{% block title %}Топ слова{% endblock %}
+
+{% block content %}
+<div class="grid gap-8">
+    <div class="card bg-base-100 shadow-sm border border-base-300">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-4">🏆 Частотный анализ</h2>
+            <form method="POST" action="/top_words" class="flex flex-col md:flex-row items-end gap-4">
+                <div class="form-control w-full">
+                    <label class="label"><span class="label-text font-bold">Файл для анализа</span></label>
+                    <select name="filename" class="select select-bordered w-full" required>
+                        {% for file in files %}
+                            <option value="{{ file }}" {% if selected_file == file %}selected{% endif %}>{{ file }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-control w-32">
+                    <label class="label"><span class="label-text font-bold">Лимит</span></label>
+                    <input type="number" name="limit" value="10" min="1" max="100" class="input input-bordered" />
+                </div>
+                <button type="submit" class="btn btn-secondary px-10">Найти слова</button>
+            </form>
+        </div>
+    </div>
+
+    {% if words %}
+    <div class="card bg-base-100 shadow-sm border border-base-300 animate-in slide-in-from-bottom-4 duration-500">
+        <div class="card-body">
+            <h2 class="card-title">Результаты: <span class="text-secondary">{{ selected_file }}</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                {% for word, count in words %}
+                <div class="flex justify-between items-center bg-base-200 p-4 rounded-xl border border-base-300">
+                    <span class="text-lg font-semibold italic">"{{ word }}"</span>
+                    <span class="badge badge-secondary badge-lg font-mono">{{ count }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
