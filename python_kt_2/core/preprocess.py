@@ -3,7 +3,7 @@ from typing import Set
 from string import punctuation, whitespace
 
 def _load_stopwords() -> Set[str]:
-    path_to_file = pathlib.Path() / "src" / "python_kt_2" / "core" / "stopwords.txt"
+    path_to_file = pathlib.Path(__file__).parent / "stopwords.txt"
     with open(path_to_file, encoding="utf-8") as f:
         return set(f.read().splitlines())
 
