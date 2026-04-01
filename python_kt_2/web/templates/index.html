@@ -1,0 +1,30 @@
+{% extends "_layout.html" %}
+
+
+
+{% block content %}
+<div class="text-center space-y-12 max-w-2xl">
+    
+    <h1 class="text-4xl font-black tracking-tight text-black">
+        добрый день
+    </h1>
+    
+    <p class="text-lg text-gray-500 font-medium tracking-tight">
+        Выберите необходимый функционал -->
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+        
+        <a href="{{ url_for('stats') }}" 
+           class="btn btn-outline btn-primary btn-lg w-full rounded-lg text-lg font-semibold tracking-wide 
+                border-2 transition-all duration-200">
+           Статистика
+        </a>
+
+        <a href="{{ url_for('top') }}" 
+           class="btn btn-outline btn-secondary btn-lg w-full rounded-lg text-lg font-semibold tracking-wide 
+                border-2  transition-all duration-200">
+            Топ-слова
+        </a>
+    </div>
+</div>
+{% endblock %}

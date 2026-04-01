@@ -1,0 +1,99 @@
+{% extends "_layout.html" %} {% block title %} Статистика {% endblock %} {%
+block content %}
+<div class="card bg-base-100 shadow-xl p-6">
+    <h2 class="card-title text-2xl mb-4">Анализ статистики текста</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div class="form-control">
+            <label class="label"
+                ><span class="label-text "
+                    >Выберите текстовый файл (.txt)</span
+                ></label
+            >
+            <input
+                type="file"
+                name="file"
+                class="file-input file-input-bordered w-full"
+                accept=".txt"
+                required 
+                
+            />
+        </div>
+
+        <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-4">
+                <input
+                    type="checkbox"
+                    name="pos"
+                    class="checkbox checkbox-primary"
+                />
+                <span class="label-text"
+                    >Включить анализ частей речи (pos)</span
+                >
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full">
+            Запустить обработку
+        </button>
+    </form>
+
+    {% if results %}
+    <div class="divider">Результаты</div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="overflow-x-auto">
+            <h3 class="font-bold mb-2">Общая структура</h3>
+            <table class="table table-zebra w-full border">
+                <thead>
+                    <tr>
+                        <th>Показатель</th>
+                        <th>Количество</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Абзацы</td>
+                        <td>{{ results.tokens.paragraphs }}</td>
+                    </tr>
+                    <tr>
+                        <td>Предложения</td>
+                        <td>{{ results.tokens.sentences }}</td>
+                    </tr>
+                    <tr>
+                        <td>Слова</td>
+                        <td>{{ results.tokens.words }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="overflow-x-auto">
+            <h3 class="font-bold mb-2">Анализ символов</h3>
+            <table class="table table-zebra w-full border">
+                <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Кол-во</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, val in results.symbols.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ val.quantity }}</td>
+                        <td>{{ val.percent }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    <div class="mt-8 text-center">
+        <a href="{{ url_for('index') }}" class="btn btn-ghost">←на главную</a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %}</title>
-    <link href="{{ url_for('static', filename='daisyui5.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} добрый день {% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
 </head>
-<body>
-    <header>
-        {% block header %} {% endblock %}
-    </header>
-    <main>
-        {% block content %} {% endblock %}
+<body class="min-h-screen flex flex-col items-center justify-center">
+    
+    <div class="fixed top-6 z-[100] w-full max-w-lg px-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert {% if category == 'error' %}alert-error{% else %}alert-info{% endif %}">
+                <span>{{ message }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="w-full flex items-center justify-center p-6">
+        {% block content %}{% endblock %}
     </main>
 </body>
 </html>

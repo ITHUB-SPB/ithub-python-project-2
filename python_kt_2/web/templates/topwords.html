@@ -1,0 +1,69 @@
+{% extends "_layout.html" %} {% block title %} Топ-слова {% endblock %} {% block
+content %}
+<div class="max-w-4xl mx-auto">
+    <div class="card bg-base-100 shadow-xl p-8">
+        <h2 class="card-title text-3xl mb-6">Анализ частоты слов</h2>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            <div class="form-control">
+                <label class="label"
+                    ><span class="label-text">Выберите файл (.txt)</span></label
+                >
+                <input
+                    type="file"
+                    name="file"
+                    class="file-input file-input-bordered w-full"
+                    accept=".txt"
+                    required
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label"
+                    ><span class="label-text">Режим нормализации</span></label
+                >
+                <select name="mode" class="select select-bordered w-full">
+                    <option value="stemming">Стемминг (быстро)</option>
+                    <option value="lemmatization">Лемматизация (точно)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full text-lg">
+                найти важные слова
+            </button>
+        </form>
+
+        {% if results %}
+        <div class="divider">Результаты (Топ-20)</div>
+        <div class="overflow-x-auto mt-4">
+            <table class="table table-zebra w-full shadow-inner border">
+                <thead>
+                    <tr class="bg-primary text-primary-content">
+                        <th class="text-lg">№</th>
+                        <th class="text-lg">Слово</th>
+                        <th class="text-lg">Частота вхождений</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for word, count in results %}
+                    <tr class="hover">
+                        <td class="font-bold">{{ loop.index }}</td>
+                        <td class="text-secondary text-lg">{{ word }}</td>
+                        <td>
+                            <div class="badge badge-outline badge-lg">
+                                {{ count }}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="{{ url_for('index') }}" class="btn btn-ghost">←на главную</a>
+    </div>
+</div>
+{% endblock %}

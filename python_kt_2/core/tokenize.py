@@ -1,27 +1,43 @@
 import re
 from .types import Tokens
 
-def _get_words(text: str) -> list[str]:
-    """Разбиение на слова (без обработки)
+def _get_paragraphs(text: str) -> list[str]:
+    """Разбиение текста на абзацы.
+    Абзацем считается текст, разделенный одним или несколькими переносами строк.
+    """
+    return [p.strip() for p in re.split(r'\n+', text) if p.strip()]
+
+
+def _get_sentences(text: str) -> list[str]:
+    """Разбиение текста на предложения.
+    Используется регулярное выражение, которое ищет знаки завершения (. ! ?)
     """
 
-    # TODO: исправьте регулярку
-    return re.split(' ', text)
+    sentences = re.split(r'(?<=[.!?])\s+', text)
+    return [s.strip() for s in sentences if s.strip()]
+
+
+def _get_words(text: str) -> list[str]:
+    """Разбиение на слова.
+    Находит все последовательности буквенно-цифровых символов.
+    """
+    return re.findall(r'\w+', text)
 
 
 def tokenize_text(text: str) -> Tokens:
-    """Разбиение текста на токены.
+    """Разбиение текста на токены: параграфы, предложения, слова."""
+    clean_text = text.strip()
 
-    Разбиение текста на токены:
-    - параграфы (абзацы),
-    - предложения,
-    - слова
-    """
-
-    # TODO допишите функции _get_paragraphs, _get_sentences
+    if not clean_text:
+        return {
+            "paragraphs": [],
+            "sentences": [],
+            "words": [],
+        }
 
     return {
-        "paragraphs": [],
-        "sentences": [],
-        "words": _get_words(text),
+        "paragraphs": _get_paragraphs(clean_text),
+        "sentences": _get_sentences(clean_text),
+        "words": _get_words(clean_text),
     }
+
