@@ -40,3 +40,7 @@ def main():
         return jsonify(use_cases.stats(text))
 
     app.run(debug=True)
+
+    @app.get("/about")
+    def about():
+        return render_template("about.html")
