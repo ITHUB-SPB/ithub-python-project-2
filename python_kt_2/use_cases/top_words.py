@@ -6,11 +6,9 @@ from python_kt_2.core.tokenize import tokenize_text
 def _count_words(words: list[str]) -> dict[str, int]:
     """Подсчет количества вхождений слов.
     """
-
     counter = {}
-
-    # TODO реализуйте подсчет слов
-
+    for word in words:
+        counter[word] = counter.get(word, 0) + 1
     return counter
 
 
@@ -18,9 +16,7 @@ def _sort_by_count(item: tuple[str, int]) -> int:
     """Сортирует по количеству вхождений,
     от большего к меньшему
     """
-
-    # TODO исправьте ошибку
-    return -item[0]
+    return -item[1]
 
 
 def top_words(

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ-слова</title>
+    <link href="{{ url_for('static', filename='daisyui5.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar bg-base-100">
+            <div class="flex-1">
+                <a href="/" class="btn btn-ghost text-xl">← Назад</a>
+            </div>
+            <div class="flex-none">
+                <span class="text-xl font-bold">Топ-слова</span>
+            </div>
+        </nav>
+    </header>
+    <main>
+<div class="min-h-screen bg-base-200 p-4">
+  <div class="max-w-2xl mx-auto">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Анализ топ-слов</h2>
+        
+        <form method="POST" action="/top" enctype="multipart/form-data">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text">Выберите текстовый файл</span>
+            </label>
+            <input type="file" name="file" accept=".txt" required class="file-input file-input-bordered w-full" />
+          </div>
+
+          <div class="form-control w-full mt-4">
+            <label class="label">
+              <span class="label-text">Режим нормализации</span>
+            </label>
+            <select name="normalize_mode" class="select select-bordered w-full">
+              <option value="stemming">Стемминг</option>
+              <option value="lemmatization">Лемматизация</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full mt-6">Анализировать</button>
+        </form>
+
+        {% if error %}
+        <div class="alert alert-error mt-4">
+          <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+        {% if top_words %}
+        <div class="divider mt-6">Результаты</div>
+        
+        <div class="overflow-x-auto">
+          <table class="table table-zebra w-full">
+            <thead>
+              <tr>
+                <th>Ранг</th>
+                <th>Слово</th>
+                <th>Количество</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for word, count in top_words %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ word }}</td>
+                <td><span class="badge badge-primary">{{ count }}</span></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+</body>
+</html>

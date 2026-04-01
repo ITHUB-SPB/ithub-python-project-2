@@ -50,6 +50,7 @@ def stats(text: str, pos: bool = False) -> TextStats:
 
 def _get_symbols_stats(text: str) -> SymbolStats:
     """Посимвольная статистика (количество и процент)."""
+    import string
 
     count_alphas = 0
     count_digits = 0
@@ -59,23 +60,31 @@ def _get_symbols_stats(text: str) -> SymbolStats:
     for symbol in text:
         if symbol.isalpha():
             count_alphas += 1
+        elif symbol.isdigit():
+            count_digits += 1
+        elif symbol.isspace():
+            count_spaces += 1
+        elif symbol in string.punctuation:
+            count_punctuation += 1
 
+    total = len(text) if len(text) > 0 else 1
     return {
-        "alphas": {"quantity": count_alphas, "percent": round(count_alphas / len(text), 2) },
-        "digits": {"quantity": count_digits, "percent": 5.00},
-        "spaces": {"quantity": count_spaces, "percent": 25.50},
-        "punctuation": {"quantity": count_punctuation, "percent": 40.50},
+        "alphas": {"quantity": count_alphas, "percent": round(count_alphas / total * 100, 2)},
+        "digits": {"quantity": count_digits, "percent": round(count_digits / total * 100, 2)},
+        "spaces": {"quantity": count_spaces, "percent": round(count_spaces / total * 100, 2)},
+        "punctuation": {"quantity": count_punctuation, "percent": round(count_punctuation / total * 100, 2)},
     }
 
 
 def _get_tokens_stats(text: str) -> TokensStats:
     """Подсчет количества токенов."""
-    text = text.strip()
-
+    from ..core.tokenize import tokenize_text
+    
+    tokens = tokenize_text(text)
     return {
-        "paragraphs": 0,
-        "sentences": 0,
-        "words": 0
+        "paragraphs": len(tokens["paragraphs"]),
+        "sentences": len(tokens["sentences"]),
+        "words": len(tokens["words"])
     }
 
 
