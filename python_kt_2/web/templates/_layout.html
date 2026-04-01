@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %}</title>
-    <link href="{{ url_for('static', filename='daisyui5.css') }}" rel="stylesheet" type="text/css" />
-    <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | TextAnalyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        {% block header %} {% endblock %}
+<body class="min-h-screen bg-base-200">
+    <header class="navbar bg-base-100 shadow-md px-4 md:px-8">
+        <div class="flex-1">
+            <a href="/" class="btn btn-ghost text-xl font-bold">📝 TextAnalyzer</a>
+        </div>
+        <nav class="flex-none">
+            <ul class="menu menu-horizontal px-1 gap-2">
+                <li><a href="/stats" class="rounded-lg">Статистика</a></li>
+                <li><a href="/top_words" class="rounded-lg">Топ слова</a></li>
+            </ul>
+        </nav>
     </header>
-    <main>
-        {% block content %} {% endblock %}
+
+    <main class="container mx-auto p-4 md:p-8 max-w-5xl">
+        {% block content %}{% endblock %}
     </main>
+
+    <footer class="footer footer-center p-4 text-base-content opacity-50">
+        <aside><p>© 2026 - Python KT 2 Project</p></aside>
+    </footer>
 </body>
 </html>

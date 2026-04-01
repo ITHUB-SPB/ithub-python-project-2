@@ -12,12 +12,10 @@ def filter_stopwords(words: list[str]) -> list[str]:
     stopwords_lower = _load_stopwords()
     stopwords_title = set(stopword.title() for stopword in stopwords_lower)
 
-    # TODO дописать фильтрацию стоп-слов
-
     return [
-        word for word in words if word
+        word for word in words
+        if word and word.lower() not in stopwords_title
     ]
-
 
 def clean_words(words: list[str]) -> list[str]:
     return [word.strip(punctuation + whitespace + "—«»…") for word in words]

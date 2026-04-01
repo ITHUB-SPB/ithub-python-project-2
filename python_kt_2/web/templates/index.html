@@ -1,0 +1,17 @@
+{% extends "_layout.html" %}
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="hero py-20 bg-base-100 rounded-3xl shadow-sm border border-base-300">
+    <div class="hero-content text-center">
+        <div class="max-w-md">
+            <h1 class="text-5xl font-extrabold mb-4">Анализатор текста</h1>
+            <p class="py-6 text-base-content/70">Инструмент для глубокого анализа структуры текста, подсчета символов и извлечения ключевых слов.</p>
+            <div class="flex gap-4 justify-center">
+                <a href="/stats" class="btn btn-primary btn-lg px-8">📊 Статистика</a>
+                <a href="/top_words" class="btn btn-secondary btn-lg px-8">🔝 Топ слова</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

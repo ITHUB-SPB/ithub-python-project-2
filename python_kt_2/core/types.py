@@ -31,6 +31,6 @@ class SearchResult(TypedDict):
 
 
 class Tokens(TypedDict):
-    paragraphs: Iterable[str]
-    sentences: Iterable[str]
-    words: Iterable[str]
+    paragraphs: list[str]
+    sentences: list[str]
+    words: list[str]
