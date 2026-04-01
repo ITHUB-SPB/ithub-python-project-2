@@ -1,4 +1,45 @@
-{% extends '_layout.html' %} {% block title %} Навигация {% endblock %} {% block
-header %} {% endblock %} {% block content %}
-<h1>Кнопушки выше</h1>
-{% endblock %}
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Навигация</title>
+    <link
+      href="{{ url_for('static', filename='index.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <main>
+      <div class="body" id="main">
+        <a href="/stats" class="navigation_div" id="stats"
+          ><div>
+            <h2>Статистика</h2>
+            <p>Текст бует позже</p>
+          </div></a
+        >
+        <a href="/top-words" class="navigation_div" id="top-words"
+          ><div>
+            <h2>Топ-слова</h2>
+            <p>Не активно</p>
+          </div></a
+        >
+        <a href="/word-cloud" class="navigation_div" id="word-cloud"
+          ><div>
+            <h2>Облако Слов</h2>
+            <p>Не активно</p>
+          </div></a
+        >
+        <a href="/about" class="navigation_div" id="about"
+          ><div>
+            <h2>О программе</h2>
+            <p>Техническая информация</p>
+          </div></a
+        >
+      </div>
+    </main>
+    <footer>
+      <small>Копирайт гыгыгы</small>
+    </footer>
+  </body>
+</html>

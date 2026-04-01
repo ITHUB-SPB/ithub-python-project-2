@@ -1,73 +1,73 @@
 html {
-    background-color: black;
-    background-image: url(https://booru.xn--l1aij1c.xn--p1ai/_images/788ab6a2254bfe09bc52f36ea3384819/5%20-%20ebenya%20garrys_mod%20screenshot%20wallpaper.jpg);
-    color: #FFFFFF;
-    font-family: Arial, sans-serif;
-    background-size: cover;
-    background-repeat: no-repeat;
+  background-color: black;
+  background-image: url(https://booru.xn--l1aij1c.xn--p1ai/_images/788ab6a2254bfe09bc52f36ea3384819/5%20-%20ebenya%20garrys_mod%20screenshot%20wallpaper.jpg);
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 div {
-    background-color: #0000006e;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px;
+  background-color: #0000006e;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
 }
 
 header {
-    background-color: #1a1a1a5f;
-    padding: 10px;
-    border-radius: 10px;
+  background-color: #1a1a1a5f;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 nav a {
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 5px 10px;
-    transition: all 0.3s ease;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
 }
 
 nav a:hover {
-    background-color: #444444;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+  background-color: #444444;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 main {
-    padding: 20px;
+  padding: 20px;
 }
 
 footer {
-    background-color: #1a1a1a92;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px;
+  background-color: #1a1a1a92;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
 }
 
 button {
-    background-color: #444444;
-    color: #FFFFFF;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+  background-color: #444444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 input {
-    background-color: #444444;
-    color: #FFFFFF;
-    border: none;
-    padding: 10px 15px;
-    margin: 5px 5px;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.3s ease;
+  background-color: #444444;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px 5px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #555555;
-    transition: all 0.3s ease;
+  background-color: #555555;
+  transition: all 0.3s ease;
 }
 
 a {
@@ -76,31 +76,39 @@ a {
 }
 
 .navigation_div {
-    padding: 10px;
-    background-color: #4141412f;
-    border: 3px solid #767676;
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    width: 25%;
+  padding: 10px;
+  background-color: #4141412f;
+  border: 3px solid #767676;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+}
+
+.navigation_div div {
+  margin: 0;
+  padding: 0;
+  background-color: #00000000;
 }
 
 .navigation_div:hover {
-    border: 3px solid #FFFFFF;
-    background-color: #000000AA;
-    transition: all 0.3s ease;
+  border: 3px solid #ffffff;
+  background-color: #000000aa;
+  transition: all 0.3s ease;
 }
 
 .navigation_div a {
-    color: #FFFFFF;
+  color: #ffffff;
 }
 
 .navigation_div p {
-    font-size: small;
+  font-size: small;
 }
 
 .navigation_div button {
-    opacity: 0;
-    
+  opacity: 0;
 }
 
 table {
@@ -110,4 +118,28 @@ table {
 td {
   border: 1px solid #ffffff56;
   text-align: center;
+}
+
+#main {
+  margin-top: -15px;
+  display: grid;
+  grid-template-areas: "stats top-words" "word-cloud about";
+  grid-template-rows: 100px 100px;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 25px;
+  place-items: center;
+}
+
+#stats {
+  grid-area: stats;
+}
+#top-words {
+  grid-area: top-words;
+}
+#word-cloud {
+  grid-area: word-cloud;
+}
+#about {
+  grid-area: about;
 }

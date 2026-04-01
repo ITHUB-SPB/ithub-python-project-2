@@ -4,23 +4,17 @@
     <meta charset="UTF-8" />
     <title>{% block title %} {% endblock %}</title>
     <link
-      href="{{ url_for('static', filename='daisyui5.css') }}"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
       href="{{ url_for('static', filename='index.css') }}"
       rel="stylesheet"
       type="text/css"
     />
-    <script src="{{ url_for('static', filename='daisyui5.js') }}"></script>
   </head>
   <body>
     <header>
       <nav>
         <a id="stats" href="/stats">Статистика</a> |
-        <a id="task2" href="/task2">Топ-слова</a> |
-        <a id="task3" href="/task3">Облако Слов</a> |
+        <a id="top-words" href="/top-words">Топ-слова</a> |
+        <a id="word-cloud" href="/word-cloud">Облако Слов</a> |
         <a id="about" href="/about">О программе</a>
       </nav>
     </header>

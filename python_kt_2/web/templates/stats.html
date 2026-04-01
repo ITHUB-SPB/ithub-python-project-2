@@ -1,9 +1,14 @@
-{% extends '_layout.html' %} {% block title %} Статистика {% endblock %} {%
-block content %}
+{% extends '_layout.html' %} {% block title %} Статистика {% endblock %} {%block
+content %}
 <div>
   <form id="stats" action="/stats" method="post" enctype="multipart/form-data">
     <h1>Статистика</h1>
     <input type="file" name="file" /><button type="submit">Загрузить</button>
+    {% if error %}
+    <p class="error">
+      <strong>Error:</strong> {{ error }} {% endif %} {% if table %} {{ table }}
+      {% endif %}
+    </p>
   </form>
 </div>
 {% endblock %}

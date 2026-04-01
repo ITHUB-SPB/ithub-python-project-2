@@ -52,19 +52,14 @@ def word_cloud(
         pathlib.Path,
         typer.Argument(help="Исходный текстовый файл", exists=True, readable=True),
     ],
-<<<<<<< HEAD
     output: pathlib.Path | None = pathlib.Path("/")
     / f"{strftime('%H_%M_$S', localtime())}_output.png",
-=======
-<<<<<<< HEAD
+
     output: pathlib.Path | None = pathlib.Path("/") / f"{strftime('%H_%M_$S', localtime())}_output.png",
->>>>>>> 627a7f7 (Первый день)
-    preprocess_mode: Literal["basic", "full"] = "basic",
-=======
     output: pathlib.Path | None = pathlib.Path("/")
     / f"{strftime('%H_%M_$S', localtime())}_output.png",
-    preprocess_mode: Literal["basic", "stemming", "lemmatization"] = "stemming",
->>>>>>> 9173ba6 (Первый день)
+    preprocess_mode: Literal["basic", "stemming", "lemmatization"] = "stemming"
+
 ):
     """Построение облака важных слов.
 
