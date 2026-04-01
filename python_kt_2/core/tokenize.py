@@ -2,26 +2,21 @@ import re
 from .types import Tokens
 
 def _get_words(text: str) -> list[str]:
-    """Разбиение на слова (без обработки)
-    """
-
-    # TODO: исправьте регулярку
-    return re.split(' ', text)
+    paragraphs = re.split(r'\n\s*\n', text.strip())
+    return [p.strip() for p in paragraphs if p.strip()]
 
 
 def tokenize_text(text: str) -> Tokens:
-    """Разбиение текста на токены.
+    sentence_endings = r'(?<=[.!?…])\s+(?=[А-ЯЁA-Z])|(?<=[.!?…])\s*$'
+    sentences = re.split(sentence_endings, text.strip())
+    return [s.strip() for s in sentences if s.strip()]
 
-    Разбиение текста на токены:
-    - параграфы (абзацы),
-    - предложения,
-    - слова
-    """
+def _get_words(text: str) -> list[str]:
+    return re.findall(r"[а-яА-ЯёЁa-zA-Z]+", text)
 
-    # TODO допишите функции _get_paragraphs, _get_sentences
-
+def tokenize_text(text: str) -> Tokens:
     return {
-        "paragraphs": [],
-        "sentences": [],
+        "paragraphs": (text),
+        "sentences": (text),
         "words": _get_words(text),
     }
