@@ -1,23 +1,19 @@
-import pathlib
-from typing import Set
-from string import punctuation, whitespace
+import re
 
-def _load_stopwords() -> Set[str]:
-    path_to_file = pathlib.Path() / "src" / "python_kt_2" / "core" / "stopwords.txt"
-    with open(path_to_file, encoding="utf-8") as f:
-        return set(f.read().splitlines())
+def clean_text(text: str) -> str:
+    """Очистка текста от лишних символов."""
+    text = text.lower()
+    # Удаляем всё, кроме букв и пробелов
+    text = re.sub(r'[^а-яёa-z\s]', '', text)
+    return text
 
-
-def filter_stopwords(words: list[str]) -> list[str]:
-    stopwords_lower = _load_stopwords()
-    stopwords_title = set(stopword.title() for stopword in stopwords_lower)
-
-    # TODO дописать фильтрацию стоп-слов
-
-    return [
-        word for word in words if word
-    ]
-
-
-def clean_words(words: list[str]) -> list[str]:
-    return [word.strip(punctuation + whitespace + "—«»…") for word in words]
+def get_basic_stats(text: str) -> dict:
+    """Подсчет базовых метрик текста."""
+    words = [w for w in text.split() if w]
+    sentences = [s for s in re.split(r'[.!?]+', text) if s.strip()]
+    
+    return {
+        "total_words": len(words),
+        "unique_words": len(set(word.lower() for word in words)),
+        "total_sentences": len(sentences)
+    }

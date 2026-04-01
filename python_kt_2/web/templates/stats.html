@@ -1,0 +1,66 @@
+{# src/python_kt_2/web/templates/stats.html #}
+{% extends "_layout.html" %}
+{% block title %}Статистика текста{% endblock %}
+{% block content %}
+<div class="container mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center">Анализ статистики текста</h2>
+    
+    <div class="card bg-base-100 shadow-xl mx-auto max-w-lg p-6">
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Выберите текстовый файл (.txt)</span>
+                </label>
+                <input type="file" name="file" id="fileInput" 
+                       class="file-input file-input-bordered w-full" 
+                       accept=".txt" 
+                       onchange="document.getElementById('submitStatsBtn').disabled = !this.value" />
+            </div>
+            
+            <div class="form-control">
+                <label class="label cursor-pointer justify-start gap-4">
+                    <input type="checkbox" name="pos_tagging" class="checkbox checkbox-primary" />
+                    <span class="label-text">Включить POS-теггинг (в разработке)</span>
+                </label>
+            </div>
+            
+            <div class="form-control mt-6">
+                <button type="submit" id="submitStatsBtn" class="btn btn-primary" disabled>
+                    Анализировать
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {# Вывод flash-сообщений #}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-error mt-6 mx-auto max-w-lg">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% if stats %}
+    <div class="overflow-x-auto mt-10 mx-auto max-w-lg">
+        <h3 class="text-2xl font-semibold mb-4 text-center">Результаты анализа</h3>
+        <table class="table table-zebra w-full shadow-lg">
+            <thead>
+                <tr>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Всего слов</td><td>{{ stats.total_words }}</td></tr>
+                <tr><td>Уникальных слов</td><td>{{ stats.unique_words }}</td></tr>
+                <tr><td>Предложений</td><td>{{ stats.total_sentences }}</td></tr>
+                {% if stats.pos_info %}
+                <tr><td>Информация о POS</td><td>{{ stats.pos_info }}</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,24 +1,15 @@
-from typing import Literal
 from wordcloud import WordCloud
-from ..core.preprocess import filter_stopwords
+import io
+import base64
+from ..core.preprocess import clean_text
 
-def word_cloud(
-    text: str, 
-    preprocess_mode: Literal["basic", "full"] = "basic"
-):
-    """Построение облака важных слов.
-
-    Получает текст, выполняет базовую предобработку (разбивает на слова, 
-    убирает пунктуацию и пробельные символы, фильтрует стоп-слова. 
-
-    В режиме полной предобработки проводит стемминг либо лемматизацию.
-
-    Возможности:
-    - сохранение результата (изображения) в файл
-    - два уровня предобработки (базовый, полный).
-    """
+def execute(text: str, mode: str = "base"):
+    data = clean_text(text) if mode == "full" else text
     
-    if preprocess_mode == "basic":
-        return WordCloud().generate(text).to_file()
-
-    return
+    wc = WordCloud(width=800, height=400, background_color='white').generate(data)   #генерация клаудвордс
+    
+    img = io.BytesIO()
+    wc.to_image().save(img, format='PNG')   #сохраняем
+    img.seek(0)
+    
+    return base64.b64encode(img.getvalue()).decode()

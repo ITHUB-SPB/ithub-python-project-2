@@ -1,0 +1,58 @@
+{# src/python_kt_2/web/templates/cloud.html #}
+{% extends "_layout.html" %}
+{% block title %}Облако слов{% endblock %}
+{% block content %}
+<div class="container mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6 text-center">Создание облака слов</h2>
+    
+    <div class="card bg-base-100 shadow-xl mx-auto max-w-lg p-6">
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Выберите текстовый файл (.txt)</span>
+                </label>
+                <input type="file" name="file" id="fileInput" 
+                       class="file-input file-input-bordered w-full" 
+                       accept=".txt" 
+                       onchange="document.getElementById('submitCloudBtn').disabled = !this.value" />
+            </div>
+            
+            <div class="form-control w-full">
+                <label class="label">
+                    <span class="label-text">Режим обработки текста</span>
+                </label>
+                <select name="mode" class="select select-bordered">
+                    <option value="base" selected>Базовый</option>
+                    <option value="full">Очистка от спецсимволов и цифр</option>
+                </select>
+            </div>
+            
+            <div class="form-control mt-6">
+                <button type="submit" id="submitCloudBtn" class="btn btn-secondary" disabled>
+                    Создать облако
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {# Вывод flash-сообщений #}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-error mt-6 mx-auto max-w-lg">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% if image %}
+    <div class="mt-10 mx-auto max-w-4xl card bg-base-100 shadow-xl">
+        <figure class="p-6">
+            <img src="data:image/png;base64,{{ image }}" alt="Облако слов" class="rounded-lg border border-base-300"/>
+        </figure>
+        <div class="card-body">
+            <h2 class="card-title text-center block">Ваше облако слов готово!</h2>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
