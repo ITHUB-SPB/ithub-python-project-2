@@ -8,6 +8,11 @@ def _count_words(words: list[str]) -> dict[str, int]:
     """
 
     counter = {}
+    for word in words:
+        if word in counter:
+            counter[word] += 1
+        else:
+            counter[word] = 1
 
     # TODO реализуйте подсчет слов
 
@@ -20,13 +25,12 @@ def _sort_by_count(item: tuple[str, int]) -> int:
     """
 
     # TODO исправьте ошибку
-    return -item[0]
+    return -item[1]
 
 
 def top_words(
     text: str, 
     normalize_mode: Literal["stemming", "lemmatization"] = "stemming", 
-    pos: list[str] = ["__all__"]
 ) -> list[tuple[str, int]]:
     """Подсчет топ-N-важных слов.
 
@@ -39,7 +43,10 @@ def top_words(
 
     initial_words = tokenize_text(text)["words"]
     words_after_clean = clean_words(initial_words)
-    words_after_filter = filter_stopwords(words_after_clean) 
-    
-    return sorted(_count_words(words_after_filter).items(), key=_sort_by_count)
+    words_after_filter = filter_stopwords(words_after_clean)
+
+    word_counts = _count_words(words_after_filter)
+
+    return sorted(word_counts.items(), key=_sort_by_count)
+    # return sorted(_count_words(words_after_filter).items(), key=_sort_by_count)
     

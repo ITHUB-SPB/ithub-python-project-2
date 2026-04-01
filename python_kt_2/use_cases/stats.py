@@ -58,7 +58,21 @@ def _get_symbols_stats(text: str) -> SymbolStats:
 
     for symbol in text:
         if symbol.isalpha():
-            count_alphas += 1
+            if symbol.isalpha():
+                count_alphas += 1
+            elif symbol.isdigit():
+                count_digits += 1
+            elif symbol.isspace():
+                count_spaces += 1
+            else:
+                count_punctuation += 1
+
+            total = len(text)
+
+    def percent(count):
+        if total == 0:
+            return 0.0
+        return round(count / total * 100, 2)
 
     return {
         "alphas": {"quantity": count_alphas, "percent": round(count_alphas / len(text), 2) },
@@ -70,16 +84,23 @@ def _get_symbols_stats(text: str) -> SymbolStats:
 
 def _get_tokens_stats(text: str) -> TokensStats:
     """Подсчет количества токенов."""
-    text = text.strip()
+    paragraphs = [p for p in text.split('\n\n') if p.strip()]
+    paragraphs_count = len(paragraphs)
+
+    sentences = re.split(r'[.!?]+', text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    sentences_count = len(sentences)
+
+    words = re.findall(r'[а-яА-Яa-zA-Z0-9]+', text)
+    words_count = len(words)
 
     return {
-        "paragraphs": 0,
-        "sentences": 0,
-        "words": 0
+        "paragraphs": paragraphs_count,
+        "sentences": sentences_count,
+        "words": words_count
     }
 
-
 def _get_pos_stats(text: str):
-    """Подсчет pos-аналитики"""
+    """Подсчет pos-аналитики (статистики по частям речи)"""
 
-    return
+
