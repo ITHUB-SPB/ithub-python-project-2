@@ -4,33 +4,35 @@
 
 {% block content %}
 
-<h2 style="font-family: 'Bradley Hand', cursive; font-size: 28px; font-weight: bold;" class="nav shadow-md bg-blue-100 text-center ">Статистика текста</h2>
+<h2 style="font-family: 'Bradley Hand', cursive; font-size: 28px; font-weight: bold;" class="nav shadow-md bg-blue-100 text-center">Статистика текста</h2>
 
 <br>
 
 <form action="/stats" method="post" enctype="multipart/form-data">
-    <p>
-        <nav class="text-center ">
-        <label style="font-family: 'Bradley Hand', cursive; font-size: 20px; font-weight: bold;">Файл (.txt):</label><br>
-        <input type="file" name="file" required accept=".txt">
-        </nav>
-    </p>
+    <div style="max-width: 500px; margin: 0 auto; padding: 20px;">
+        <div style="margin-bottom: 20px; text-align: center;">
+            <label style="font-family: 'Bradley Hand', cursive; font-size: 20px; font-weight: bold;">Файл (.txt):</label><br>
+            <input type="file" name="file" required accept=".txt" style="margin-top: 10px;">
+        </div>
 
-    <p class="text-center">
-        <label>
-            <input type="checkbox" name="pos">
-            Анализ частей речи
-        </label>
-    </p>
+        <div style="margin-bottom: 20px; text-align: center;">
+            <label>
+                <input type="checkbox" name="pos">
+                Анализ частей речи
+            </label>
+        </div>
 
-    <br>
-
-    <p>
-       <div style="text-align: center;">
-       <button type="submit" class="btn shadow-md" style="font-family: 'Bradley Hand', cursive; font-size: 18px; ">Обработать</button>
-       </div>
-    </p>
+        <div style="text-align: center;">
+            <button type="submit" class="btn shadow-md" style="font-family: 'Bradley Hand', cursive; font-size: 18px;">Обработать</button>
+        </div>
+    </div>
 </form>
+
+{% if error %}
+<div class="alert alert-error" style="max-width: 500px; margin: 20px auto; text-align: center; background-color: #fee; border: 1px solid #fcc; border-radius: 8px; padding: 10px;">
+    <span style="color: red;">{{ error }}</span>
+</div>
+{% endif %}
 
 {% if result %}
 <br>
@@ -38,7 +40,13 @@
     <h3>Результаты статистики:</h3>
 </div>
 
-<h4 style="text-align: center; margin: 15px ">Токены:</h4>
+{% if filename %}
+<div class="alert alert-success" style="max-width: 400px; margin: 10px auto; text-align: center; background-color: #efe; border: 1px solid #cfc; border-radius: 8px; padding: 8px;">
+    <span style="color: green;">Файл "{{ filename }}" успешно обработан</span>
+</div>
+{% endif %}
+
+<h4 style="text-align: center; margin: 15px">Токены:</h4>
 <div style="display: flex; justify-content: center">
     <table style="border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <tr>
@@ -56,8 +64,8 @@
     </table>
 </div>
 
-<h4 style="text-align: center; margin: 20px ">Символы:</h4>
-<div style="display: flex; justify-content: center;  margin: 30px">
+<h4 style="text-align: center; margin: 20px">Символы:</h4>
+<div style="display: flex; justify-content: center; margin: 30px">
     <table style="border-collapse: collapse; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         <thead>
             <tr style="background: #f5f5f5;">
@@ -89,12 +97,7 @@
             </tr>
         </tbody>
     </table>
-
 </div>
-{% endif %}
-
-{% if error %}
-<p style="color: red;">{{ error }}</p>
 {% endif %}
 
 {% endblock %}
