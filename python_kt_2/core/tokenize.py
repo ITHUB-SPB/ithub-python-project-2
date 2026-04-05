@@ -34,4 +34,3 @@ def tokenize_text(text: str) -> Tokens:
         "sentences": _get_sentences(text),
         "words": _get_words(text),
     }
-

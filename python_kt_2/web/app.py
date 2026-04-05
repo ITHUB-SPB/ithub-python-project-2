@@ -34,7 +34,7 @@ def stats_process():
 
         result = use_cases.stats(text, pos)
 
-        return render_template('stats.html', result=result)
+        return render_template('stats.html', result=result, filename=text_file.filename)
 
     except Exception as e:
         return render_template('stats.html', error=f"Ошибка при обработке: {str(e)}")
@@ -57,7 +57,16 @@ def top_words_process():
         if not text_file.filename.endswith('.txt'):
             return render_template('topwords.html', error="Пожалуйста, загрузите файл в формате .txt")
 
+        text_file.seek(0, 2)
+        if text_file.tell() == 0:
+            return render_template('topwords.html', error="Файл пустой. Пожалуйста, выберите непустой файл")
+        
+        if text_file.tell() > 5 * 1024 * 1024:
+            return render_template('topwords.html', error="Файл слишком большой. Максимальный размер 5 МБ")
+        text_file.seek(0)
+
         destination = Path() / 'python_kt_2' / 'corpus' / text_file.filename
+        destination.parent.mkdir(parents=True, exist_ok=True)
         text_file.save(destination)
 
         text = destination.read_text(encoding='utf-8')
@@ -65,7 +74,7 @@ def top_words_process():
         result = use_cases.top_words(text, normalize_mode)
 
         top_20 = result[:20]
-        return render_template('topwords.html', result=top_20)
+        return render_template('topwords.html', result=top_20, filename=text_file.filename)
 
     except Exception as e:
         return render_template('topwords.html', error=f"Ошибка при обработке: {str(e)}")

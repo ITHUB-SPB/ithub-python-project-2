@@ -49,8 +49,6 @@ def stats(text: str, pos: bool = False) -> TextStats:
 
 
 def _get_symbols_stats(text: str) -> SymbolStats:
-    """Посимвольная статистика (количество и процент)."""
-
     count_alphas = 0
     count_digits = 0
     count_spaces = 0
@@ -58,27 +56,26 @@ def _get_symbols_stats(text: str) -> SymbolStats:
 
     for symbol in text:
         if symbol.isalpha():
-            if symbol.isalpha():
-                count_alphas += 1
-            elif symbol.isdigit():
-                count_digits += 1
-            elif symbol.isspace():
-                count_spaces += 1
-            else:
-                count_punctuation += 1
+            count_alphas += 1
+        elif symbol.isdigit():
+            count_digits += 1
+        elif symbol.isspace():
+            count_spaces += 1
+        else:
+            count_punctuation += 1
 
-            total = len(text)
-
+    total = len(text)
+    
     def percent(count):
         if total == 0:
             return 0.0
         return round(count / total * 100, 2)
 
     return {
-        "alphas": {"quantity": count_alphas, "percent": round(count_alphas / len(text), 2) },
-        "digits": {"quantity": count_digits, "percent": 5.00},
-        "spaces": {"quantity": count_spaces, "percent": 25.50},
-        "punctuation": {"quantity": count_punctuation, "percent": 40.50},
+        "alphas": {"quantity": count_alphas, "percent": percent(count_alphas)},
+        "digits": {"quantity": count_digits, "percent": percent(count_digits)},
+        "spaces": {"quantity": count_spaces, "percent": percent(count_spaces)},
+        "punctuation": {"quantity": count_punctuation, "percent": percent(count_punctuation)},
     }
 
 
@@ -102,5 +99,3 @@ def _get_tokens_stats(text: str) -> TokensStats:
 
 def _get_pos_stats(text: str):
     """Подсчет pos-аналитики (статистики по частям речи)"""
-
-

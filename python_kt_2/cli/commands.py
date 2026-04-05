@@ -96,4 +96,3 @@ def top_words(
     result = use_cases.top_words(text, normalize_mode, pos)
 
     print(result)
-

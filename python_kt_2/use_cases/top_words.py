@@ -1,52 +1,102 @@
-from typing import Literal
-from ..core.preprocess import filter_stopwords, clean_words
-from python_kt_2.core.tokenize import tokenize_text
+import re
+import pathlib
+
+from ..core.types import TextStats, SymbolStats, Tokens, TokensStats
 
 
-def _count_words(words: list[str]) -> dict[str, int]:
-    """Подсчет количества вхождений слов.
+def stats(text: str, pos: bool = False) -> TextStats:
+    """Функция для подсчета статистик.
+
+    Args:
+        text: текст для расчета статистик
+        pos: опция, добавляет аналитику по частям речи
+
+    Returns:
+        Статистика, сгруппированная по токенам, символам и,
+        опционально, морфологическим характеристикам
+
+        Например, для строки `\tПроверка!\nНовая строка` это
+        будет:
+        {
+            "tokens": {
+                "paragraphs": 2,
+                "sentences": 2,
+                "words": 3,
+            },
+            "symbols": {
+                "alphas": {
+                    "quantity": 19,
+                    "percent": 82.61
+                },
+                "digits": {
+                    "quantity": 0,
+                    "percent": 0.00
+                },
+                "spaces": {
+                    "quantity": 3,
+                    "percent": 13.04
+                },
+                "punctuation": {
+                    "quantity": 1,
+                    "percent": 4.35
+                }
+            }
+        }
+
     """
 
-    counter = {}
-    for word in words:
-        if word in counter:
-            counter[word] += 1
+    return {"tokens": _get_tokens_stats(text), "symbols": _get_symbols_stats(text)}
+
+
+def _get_symbols_stats(text: str) -> SymbolStats:
+    count_alph = 0
+    count_spaces = 0
+    count_numbers = 0
+    count_punctuation = 0
+
+    for symbol in text:
+        if symbol.isalpha():
+            count_alph += 1
+        elif symbol.isdigit():
+            count_numbers += 1
+        elif symbol.isspace():
+            count_spaces += 1
         else:
-            counter[word] = 1
+            count_punctuation += 1
 
-    # TODO реализуйте подсчет слов
-
-    return counter
-
-
-def _sort_by_count(item: tuple[str, int]) -> int:
-    """Сортирует по количеству вхождений,
-    от большего к меньшему
-    """
-
-    # TODO исправьте ошибку
-    return -item[1]
-
-
-def top_words(
-    text: str, 
-    normalize_mode: Literal["stemming", "lemmatization"] = "stemming", 
-) -> list[tuple[str, int]]:
-    """Подсчет топ-N-важных слов.
-
-    Получает текст, разбивает на слова, убирает пунктуацию и пробельные символы,
-    фильтрует стоп-слова, нормализует (либо стемминг, либо лемматизация),
-    подсчитывает и возвращает список кортежей для топ-N-важных слов.
-    """
+    total = len(text)
     
-    # TODO допишите / исправьте ошибки
+    def percent(count):
+        if total == 0:
+            return 0.0
+        return round(count / total * 100, 2)
 
-    initial_words = tokenize_text(text)["words"]
-    words_after_clean = clean_words(initial_words)
-    words_after_filter = filter_stopwords(words_after_clean)
+    return {
+        "alphas": {"quantity": count_alph, "percent": percent(count_alph)},
+        "digits": {"quantity": count_numbers, "percent": percent(count_numbers)},
+        "spaces": {"quantity": count_spaces, "percent": percent(count_spaces)},
+        "punctuation": {"quantity": count_punctuation, "percent": percent(count_punctuation)},
+    }
 
-    word_counts = _count_words(words_after_filter)
 
-    return sorted(word_counts.items(), key=_sort_by_count)
-    # return sorted(_count_words(words_after_filter).items(), key=_sort_by_count)
-    
+def _get_tokens_stats(text: str) -> TokensStats:
+    """Подсчет количества токенов."""
+    paragraphs = [p for p in text.split('\n\n') if p.strip()]
+    paragraphs_count = len(paragraphs)
+
+    sentences = re.split(r'[.!?]+', text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    sentences_count = len(sentences)
+
+    words = re.findall(r'[а-яА-Яa-zA-Z0-9]+', text)
+    words_count = len(words)
+
+    return {
+        "paragraphs": paragraphs_count,
+        "sentences": sentences_count,
+        "words": words_count
+    }
+
+def _get_pos_stats(text: str):
+    """Подсчет pos-аналитики (статистики по частям речи)"""
+
