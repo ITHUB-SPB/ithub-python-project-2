@@ -13,8 +13,8 @@ def _load_stopwords() -> Set[str]:
 def filter_stopwords(words: list[str]) -> list[str]:
     """Фильтрация стоп-слов."""
     stopwords_lower = _load_stopwords()
-    print(f"Загружено стоп-слов: {len(stopwords_lower)}")  # ← ДОБАВЬ
-    print(f"Пример стоп-слов: {list(stopwords_lower)[:10]}")  # ← ДОБАВЬ
+    print(f"Загружено стоп-слов: {len(stopwords_lower)}")
+    print(f"Пример стоп-слов: {list(stopwords_lower)[:10]}")
 
     stopwords_title = set(stopword.title() for stopword in stopwords_lower)
     stopwords_upper = set(stopword.upper() for stopword in stopwords_lower)

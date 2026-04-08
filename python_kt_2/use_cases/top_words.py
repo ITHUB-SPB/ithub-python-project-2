@@ -1,26 +1,76 @@
 from typing import Literal
 from ..core.preprocess import filter_stopwords, clean_words
-from python_kt_2.core.tokenize import tokenize_text
+from ..core.tokenize import tokenize_text
+
+# Импорт для лемматизации
+from pymystem3 import Mystem
+
+mystem = Mystem()
 
 
 def _count_words(words: list[str]) -> dict[str, int]:
-    """Подсчет количества вхождений слов.
-    """
-
+    """Подсчет количества вхождений слов."""
     counter = {}
-
-    # TODO реализуйте подсчет слов
-
+    for word in words:
+        if word in counter:
+            counter[word] += 1
+        else:
+            counter[word] = 1
     return counter
 
 
 def _sort_by_count(item: tuple[str, int]) -> int:
-    """Сортирует по количеству вхождений,
-    от большего к меньшему
-    """
+    """Сортирует по количеству вхождений, от большего к меньшему."""
+    return -item[1]
 
-    # TODO исправьте ошибку
-    return -item[0]
+
+def _simple_stem(word: str) -> str:
+    """Простой стемминг для русских и английских слов (запасной вариант)."""
+    word = word.lower()
+
+    if len(word) <= 4:
+        return word
+    russian_endings = [
+        'ая', 'яя', 'ое', 'ее', 'ые', 'ие',
+        'ого', 'его', 'ому', 'ему', 'ым', 'им',
+        'ом', 'ем', 'ой', 'ей',
+        'ую', 'юю', 'аю', 'яю',
+        'ть', 'ти', 'чь',
+        'ет', 'ит', 'ат', 'ят',
+        'ут', 'ют', 'ают', 'яют',
+        'ал', 'ял', 'ил', 'ол', 'ул',
+        'ен', 'ён', 'ян',
+        'ок', 'ёк', 'ек',
+        'ск', 'нн',
+        'ей', 'ий', 'ый', 'ой',
+        'а', 'я', 'о', 'е', 'у', 'ю', 'ы', 'и', 'ь', 'ъ'
+    ]
+
+    for ending in russian_endings:
+        if word.endswith(ending):
+            result = word[:-len(ending)]
+            if len(result) >= 3:
+                return result
+
+    return word
+
+
+def _lemmatize_words(words: list[str]) -> list[str]:
+    """Лемматизация списка слов с помощью Mystem."""
+    if not words:
+        return []
+
+    text = ' '.join(words)
+
+    lemmas = mystem.lemmatize(text)
+
+    result = []
+    for lemma in lemmas:
+        lemma = lemma.strip()
+        if lemma and lemma.isalpha() and len(lemma) > 1:
+            result.append(lemma.lower())
+
+    return result
 
 
 def top_words(
@@ -34,10 +84,16 @@ def top_words(
     подсчитывает и возвращает список кортежей для топ-N-важных слов.
     """
 
-    # TODO допишите / исправьте ошибки
-
     initial_words = tokenize_text(text)["words"]
     words_after_clean = clean_words(initial_words)
     words_after_filter = filter_stopwords(words_after_clean)
+    if normalize_mode == "stemming":
+        words_normalized = [_simple_stem(word) for word in words_after_filter]
+    else:  # lemmatization
+        words_normalized = _lemmatize_words(words_after_filter)
 
-    return sorted(_count_words(words_after_filter).items(), key=_sort_by_count)
+    words_normalized = [word for word in words_normalized if len(word) > 2]
+
+    word_counts = _count_words(words_normalized)
+
+    return sorted(word_counts.items(), key=_sort_by_count)
