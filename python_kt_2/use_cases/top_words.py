@@ -2,7 +2,6 @@ from typing import Literal
 from ..core.preprocess import filter_stopwords, clean_words
 from ..core.tokenize import tokenize_text
 
-# Импорт для лемматизации
 from pymystem3 import Mystem
 
 mystem = Mystem()
@@ -25,7 +24,7 @@ def _sort_by_count(item: tuple[str, int]) -> int:
 
 
 def _simple_stem(word: str) -> str:
-    """Простой стемминг для русских и английских слов (запасной вариант)."""
+    
     word = word.lower()
 
     if len(word) <= 4:
@@ -79,9 +78,7 @@ def top_words(
 ) -> list[tuple[str, int]]:
     """Подсчет топ-N-важных слов.
 
-    Получает текст, разбивает на слова, убирает пунктуацию и пробельные символы,
-    фильтрует стоп-слова, нормализует (либо стемминг, либо лемматизация),
-    подсчитывает и возвращает список кортежей для топ-N-важных слов.
+   
     """
 
     initial_words = tokenize_text(text)["words"]
