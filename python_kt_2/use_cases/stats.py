@@ -5,45 +5,6 @@ from ..core.types import TextStats, SymbolStats, Tokens, TokensStats
 
 
 def stats(text: str, pos: bool = False) -> TextStats:
-    """Функция для подсчета статистик.
-
-    Args:
-        text: текст для расчета статистик
-        pos: опция, добавляет аналитику по частям речи
-
-    Returns:
-        Статистика, сгруппированная по токенам, символам и,
-        опционально, морфологическим характеристикам
-
-        Например, для строки `\tПроверка!\nНовая строка` это
-        будет:
-        {
-            "tokens": {
-                "paragraphs": 2,
-                "sentences": 2,
-                "words": 3,
-            },
-            "symbols": {
-                "alphas": {
-                    "quantity": 19,
-                    "percent": 82.61
-                },
-                "digits": {
-                    "quantity": 0,
-                    "percent": 0.00
-                },
-                "spaces": {
-                    "quantity": 3,
-                    "percent": 13.04
-                },
-                "punctuation": {
-                    "quantity": 1,
-                    "percent": 4.35
-                }
-            }
-        }
-
-    """
 
     return {"tokens": _get_tokens_stats(text), "symbols": _get_symbols_stats(text)}
 
@@ -80,7 +41,6 @@ def _get_symbols_stats(text: str) -> SymbolStats:
 
 
 def _get_tokens_stats(text: str) -> TokensStats:
-    """Подсчет количества токенов."""
     paragraphs = [p for p in text.split('\n\n') if p.strip()]
     paragraphs_count = len(paragraphs)
 
@@ -98,6 +58,6 @@ def _get_tokens_stats(text: str) -> TokensStats:
     }
 
 def _get_pos_stats(text: str):
-    """Подсчет pos-аналитики (статистики по частям речи)"""
+
 
 
