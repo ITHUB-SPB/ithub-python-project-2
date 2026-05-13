@@ -3,20 +3,12 @@ from .types import Tokens
 
 
 def _get_words(text: str) -> list[str]:
-    """Разбиение на слова (с удалением пунктуации)."""
     words = re.findall(r'[а-яА-Яa-zA-Z0-9]+', text)
     words = [word.lower() for word in words]
     return words
 
 
 def tokenize_text(text: str) -> Tokens:
-    """Разбиение текста на токены.
-
-    Разбиение текста на токены:
-    - параграфы (абзацы),
-    - предложения,
-    - слова
-    """
 
     def _get_paragraphs(text: str) -> list[str]:
         return text.split('\n\n')
